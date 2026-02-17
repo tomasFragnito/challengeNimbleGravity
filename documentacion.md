@@ -19,6 +19,8 @@ GET getCandidate -> devuelve informacion del candidato solo si se brinda un emai
 
 POST postAplication -> envia por body los datos uuid, jobId, candidateId, repoUrl y applicationId. Luego del envio retorna si su subida fue exitosa o con errores.
 
-
-
+-----------------------
+*OTROS
+(en la consigna la utilizacion del body postAplication excluye el parametro applicationId, 
+pero este es requerido para su correcto envio a la API)
 
