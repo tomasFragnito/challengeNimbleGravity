@@ -37,7 +37,7 @@ const PostulationsList = () => {
         }
     };
 
-    const handleSubmit = (jobId) => {
+    const handleSubmit = async (jobId) => {
         if (!candidate){
             setError("El candidato aún no se cargó");
             return;
@@ -51,14 +51,14 @@ const PostulationsList = () => {
         try{
             console.log("aplicando:", jobId, "repo:", repos[jobId]);
 
-            const res = postAplication({
+            const res = await postAplication({
                 uuid: candidate.uuid,
                 jobId: jobId,
                 candidateId: candidate.candidateId,
                 repoUrl: repos[jobId],
             }); 
 
-            console.log(res.ok);
+            console.log(res);
         }
         catch(err){
             console.error(err);

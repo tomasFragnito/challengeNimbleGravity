@@ -23,21 +23,21 @@ export const getOpenPostulations = async () => {
   return res.json();
 };
 
-export const postAplication = async (uuid, jobId, candidateId, repoUrl) => {
+export const postAplication = async ({uuid, jobId, candidateId, repoUrl}) => {
 
-    const res = await fetch(BASE_URL + "/api/candidate/apply-to-job", {
-        method: "POST",
-        headers: {"Content-Type": "application/json",},
-        body: JSON.stringify({
-            uuid: uuid,
-            jobId: jobId,
-            candidateId: candidateId,
-            repoUrl: repoUrl,
-        }),
-    });
+  const res = await fetch(BASE_URL + "/api/candidate/apply-to-job", {
+      method: "POST",
+      headers: {"Content-Type": "application/json",},
+      body: JSON.stringify({
+          uuid: uuid,
+          jobId: jobId,
+          candidateId: candidateId,
+          repoUrl: repoUrl,
+      }),
+  });
 
-    if (!res.ok) throw new Error("error en aplicacion de la postulacion, error de POST");
+  if (!res.ok) throw new Error("error en aplicacion de la postulacion, error de POST");
 
-    return res.json();
+  return res.json();
 };
 
