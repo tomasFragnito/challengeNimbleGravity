@@ -3,6 +3,7 @@ import "../css/Postulations.css";
 import { usePostulations, useCandidate, isValidGithubUrl } from "../scripts/hooks";
 import { postAplication } from "../scripts/callback";
 import ErrorModal from "./ErrorModal"; // componente modal para mostrar errores
+import SuccessModal from "./SuccessModal";
 
 
 // email candidato
@@ -19,6 +20,7 @@ const PostulationsList = () => {
     const [repos, setRepos] = useState({});//almacena las urls de repositorios ingresadas
 
     const [error, setError] = useState("");//errores generales
+    const [success, setSuccess] = useState("");
 
     //maneja cambios en los inputs
     const handleChange = (id, value) => {
@@ -62,6 +64,10 @@ const PostulationsList = () => {
                 repos[jobId],
                 candidate.applicationId
             ); 
+
+            setSuccess("¡Postulación enviada correctamente!");
+
+            setRepos(prev => ({ ...prev, [jobId]: "" })); // limpia el input del repositorio despues de enviar
 
             return res;
         }
@@ -112,6 +118,11 @@ const PostulationsList = () => {
             <ErrorModal
                 message={error}
                 onClose={() => setError("")}
+            />
+
+            <SuccessModal
+                message={success}
+                onClose={() => setSuccess("")} // cierra modal de exito
             />
            
         </div> 
