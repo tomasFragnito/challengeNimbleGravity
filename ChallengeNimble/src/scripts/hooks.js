@@ -20,7 +20,9 @@ export const useCandidate = (email) => {
                 email: data.email,
             });
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+            console.error(err);
+        });
     }, [email]);
 
     return candidate;
@@ -30,10 +32,13 @@ export const usePostulations = () => { //obtiene las postulaciones abiertas
     const [postulations, setPostulations] = useState([]);
 
     useEffect(() => {
-        getOpenPostulations().then(setPostulations);// llama a la API y guarda la lista de posiciones abiertas (se ejecuta una vez al cargar el componente) y la guarda en el estado usePostulations
+        getOpenPostulations().then(setPostulations)// llama a la API y guarda la lista de posiciones abiertas (se ejecuta una vez al cargar el componente) y la guarda en el estado usePostulations
+        .catch((err) => {
+            console.error(err);
+        });
     }, []);
 
-    return postulations;
+    return postulations;;
 };
 
 export const isValidGithubUrl = (url) => { // funcion para validar si una URL es de GitHub

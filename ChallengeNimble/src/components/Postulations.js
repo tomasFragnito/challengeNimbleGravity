@@ -65,7 +65,7 @@ const PostulationsList = () => {
                 candidate.applicationId
             ); 
 
-            setSuccess("¡Postulación enviada correctamente!");
+            setSuccess("¡Postulacion enviada correctamente!");
 
             setRepos(prev => ({ ...prev, [jobId]: "" })); // limpia el input del repositorio despues de enviar
 
