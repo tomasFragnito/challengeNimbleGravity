@@ -4,7 +4,7 @@ import { getCandidate, getOpenPostulations } from "./callback";
 export const useCandidate = (email) => {
     const [candidate, setCandidate] = useState(null);
 
-    useEffect(() => {
+    useEffect(() => { // si hay email, hace el get para obtener los datos del candidato y guardarlos en el estado useCandidate
         if (!email) return;
 
         getCandidate(email)
@@ -26,17 +26,17 @@ export const useCandidate = (email) => {
     return candidate;
 };
 
-export const usePostulations = () => {
+export const usePostulations = () => { //obtiene las postulaciones abiertas
     const [postulations, setPostulations] = useState([]);
 
     useEffect(() => {
-        getOpenPostulations().then(setPostulations);
+        getOpenPostulations().then(setPostulations);// llama a la API y guarda la lista de posiciones abiertas (se ejecuta una vez al cargar el componente) y la guarda en el estado usePostulations
     }, []);
 
     return postulations;
 };
 
-export const isValidGithubUrl = (url) => {
+export const isValidGithubUrl = (url) => { // funcion para validar si una URL es de GitHub
     if (!url) {
         return false;
     } else if (url.startsWith("https://github.com/")) {

@@ -2,21 +2,25 @@ import { useState } from "react";
 import "../css/Postulations.css";
 import { usePostulations, useCandidate, isValidGithubUrl } from "../scripts/hooks";
 import { postAplication } from "../scripts/callback";
-import ErrorModal from "./ErrorModal";
+import ErrorModal from "./ErrorModal"; // componente modal para mostrar errores
 
+
+// email candidato
 const email = "tomignacio2022@gmail.com";
 
 const PostulationsList = () => {
 
-    const postulations = usePostulations();
-    const candidate = useCandidate(email);
+    const postulations = usePostulations();// hook para obtener las posiciones abiertas desde la api
 
-    const [inputErrors, setInputErrors] = useState({});
+    const candidate = useCandidate(email); // hook para obtener los datos del candidato por email
 
-    const [repos, setRepos] = useState({});
+    const [inputErrors, setInputErrors] = useState({});// erstado para errores de input
 
-    const [error, setError] = useState("");
+    const [repos, setRepos] = useState({});//almacena las urls de repositorios ingresadas
 
+    const [error, setError] = useState("");//errores generales
+
+    //maneja cambios en los inputs
     const handleChange = (id, value) => {
         setRepos(function(prev) {
             const newObj = { ...prev };
@@ -27,38 +31,39 @@ const PostulationsList = () => {
         if (value && !isValidGithubUrl(value)) {
             setInputErrors(prev => ({
                 ...prev,
-                [id]: "La URL debe comenzar con https://github.com/"
+                [id]: "La URL debe comenzar con https://github.com/"   //validacion de la url en input
             }));
         } else {
-            setInputErrors(prev => ({
+            setInputErrors(prev => ({// si es valido, borra el error del input
                 ...prev,
                 [id]: ""
             }));
         }
     };
 
-    const handleSubmit = async (jobId) => {
+    const handleSubmit = async (jobId) => { //enviar la postulacion
         if (!candidate){
             setError("El candidato aún no se cargó");
             return;
         } 
 
-        if (!isValidGithubUrl(repos[jobId])) {
+        if (!isValidGithubUrl(repos[jobId])) { // validacion de url antes de enviar
             setError("La URL debe comenzar con https://github.com/");
             return;
         }
 
         try{
-            console.log("aplicando:", jobId, "repo:", repos[jobId]);
+            console.log("aplicando:", jobId, "repo:", repos[jobId]);  //envio del POST
 
-            const res = await postAplication({
-                uuid: candidate.uuid,
-                jobId: jobId,
-                candidateId: candidate.candidateId,
-                repoUrl: repos[jobId],
-            }); 
+            const res = await postAplication(
+                candidate.uuid,
+                jobId,
+                candidate.candidateId,
+                repos[jobId],
+                candidate.applicationId
+            ); 
 
-            console.log(res);
+            return res;
         }
         catch(err){
             console.error(err);
