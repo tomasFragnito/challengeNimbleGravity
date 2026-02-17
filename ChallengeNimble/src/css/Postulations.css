@@ -23,8 +23,10 @@
   background: #fafafa;
   color: #000000;
 
-  width: 180px;
-  height: 250px;
+  width: 100%;        
+  max-width: 250px;      
+  height: auto;         
+  min-height: 300px; 
 
   display: flex;
   flex-direction: column;
@@ -34,8 +36,8 @@
 .jobTitle {
   text-align: center;
 
-  min-height: 60px;
-  max-height: 48px;
+  min-height: 80px;
+  max-height: 50px;
   overflow: hidden;
 
   display: -webkit-box;
@@ -82,14 +84,11 @@
 
 .jobId {
   position: relative;
-  top: -14px;
+  top: -25px;
 }
 
 .inputError {
-  position: absolute;
-  top: 40px;  
-  left: 0;
   font-size: 12px;
   color: #e53935;
-  margin: 0;
+  margin: 4px 0 0 0; 
 }
