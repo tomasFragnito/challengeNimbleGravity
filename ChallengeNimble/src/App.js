@@ -1,15 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
 import PostulationsList from "./components/Postulations";
 
 function App() {
-  const candidate = {
-    uuid: "a1b2c3d4-...",
-    candidateId: "a1b2c3d4"
-  };
+
   return (
     <div className="App">
       <header className="App-header">
+        <h2>Job Position Challenge Nimble Gravity</h2>
         <PostulationsList />
       </header>
     </div>

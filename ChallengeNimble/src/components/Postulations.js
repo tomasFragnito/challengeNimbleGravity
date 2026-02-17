@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "../css/Postulations.css";
-import { usePostulations, useCandidate } from "./hooks";
-import { postAplication } from "./callback";
+import { usePostulations, useCandidate, isValidGithubUrl } from "../scripts/hooks";
+import { postAplication } from "../scripts/callback";
+import ErrorModal from "./ErrorModal";
 
 const email = "tomignacio2022@gmail.com";
 
@@ -10,7 +11,11 @@ const PostulationsList = () => {
     const postulations = usePostulations();
     const candidate = useCandidate(email);
 
+    const [inputErrors, setInputErrors] = useState({});
+
     const [repos, setRepos] = useState({});
+
+    const [error, setError] = useState("");
 
     const handleChange = (id, value) => {
         setRepos(function(prev) {
@@ -18,10 +23,30 @@ const PostulationsList = () => {
             newObj[id] = value;
             return newObj;
         });
+
+        if (value && !isValidGithubUrl(value)) {
+            setInputErrors(prev => ({
+                ...prev,
+                [id]: "La URL debe comenzar con https://github.com/"
+            }));
+        } else {
+            setInputErrors(prev => ({
+                ...prev,
+                [id]: ""
+            }));
+        }
     };
 
     const handleSubmit = (jobId) => {
-        if (!candidate) return;
+        if (!candidate){
+            setError("El candidato aún no se cargó");
+            return;
+        } 
+
+        if (!isValidGithubUrl(repos[jobId])) {
+            setError("La URL debe comenzar con https://github.com/");
+            return;
+        }
 
         try{
             console.log("aplicando:", jobId, "repo:", repos[jobId]);
@@ -37,6 +62,7 @@ const PostulationsList = () => {
         }
         catch(err){
             console.error(err);
+            setError("Error al enviar la postulacion");
         }
     };
 
@@ -53,7 +79,11 @@ const PostulationsList = () => {
                         <h3 className="jobTitle">{job.title}</h3>
 
                         <div className="cardData">
-                            <p>ID: {job.id}</p>
+                            <p className="jobId">ID: {job.id}</p>
+
+                            {inputErrors[job.id] && (
+                                <p className="inputError">{inputErrors[job.id]}</p>
+                            )}
 
                             <input
                                 className="input"
@@ -66,7 +96,7 @@ const PostulationsList = () => {
                             <button
                                 className="button"
                                 onClick={() => handleSubmit(job.id)}
-                                disabled={!repos[job.id]}>
+                                disabled={isValidGithubUrl(repos[job.id]) ? false : true}>
                                 Submit
                             </button>
                         </div>
@@ -74,6 +104,10 @@ const PostulationsList = () => {
                     </div>
                 ))}
             </div>
+            <ErrorModal
+                message={error}
+                onClose={() => setError("")}
+            />
            
         </div> 
     );

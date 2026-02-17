@@ -36,4 +36,13 @@ export const usePostulations = () => {
     return postulations;
 };
 
+export const isValidGithubUrl = (url) => {
+    if (!url) {
+        return false;
+    } else if (url.startsWith("https://github.com/")) {
+        return true;
+    } else {
+        return false;
+    }
+};
 
