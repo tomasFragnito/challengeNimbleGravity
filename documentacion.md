@@ -1,10 +1,10 @@
 DESCRIPCION DEL FUNCIONAMIENTO:
 
-La app se basa en un componente central, componente Postulations.js, cual se encarga de renderizar las postulaicones abiertas
-utiliza el script hooks.js cual a su vez se encarga de comunicarse con los callbacks para llamados GET
-callback.js es el script que se comunica directamente con la API
+La app se basa en un componente central, componente Postulations.js, cual se encarga de renderizar las postulaicones abiertas.
+utiliza el archivo hooks.js cual a su vez se encarga de comunicarse con los callbacks para llamados GET.
+callback.js es el script que se comunica directamente con la API.
 
-todo manejo del usuario y manejo de errores se encuentra dentro del componente Postulations, que se carga dinamicamente dentro de app.js
+todo manejo del usuario y manejo de errores se encuentra dentro del componente Postulations, que se carga dinamicamente dentro de app.js.
 
 Existe ErrorModal.js el cual es un modal encargado de visualizar al usuario los errores
 y SuccessModal solamente muestra al usuario por modal si la postulacion fue correctamente enviada
